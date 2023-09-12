@@ -1,6 +1,9 @@
-
 output "maintest_vm1" {
 value = yandex_compute_instance.vm-1.boot_disk[0].disk_id
+}
+
+output "maintest_vm2" {
+value = yandex_compute_instance.vm-2.boot_disk[0].disk_id
 }
 
 output "external_vm1" {
