@@ -38,7 +38,10 @@ resource "yandex_compute_instance" "vm-1" {
 
   metadata = {
     user-data = "${file("./meta.yaml")}"	
+  }
 
+  scheduling_policy {
+    preemptible = true
   }
 }
 
@@ -71,6 +74,10 @@ resource "yandex_compute_instance" "vm-2" {
 
   metadata = {
     user-data = "${file("./meta.yaml")}"
+  }
+
+  scheduling_policy {
+    preemptible = true
   }
 }
 # Creating a cloud network
