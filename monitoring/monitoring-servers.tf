@@ -27,6 +27,10 @@ resource "yandex_compute_instance" "prometheus" {
   metadata = {
     user-data = "${file("./meta-monitoring.yaml")}"
   }
+
+  scheduling_policy {
+    preemptible = true
+  }
 }
 
 # Creating a VM_Grafana
@@ -58,10 +62,11 @@ resource "yandex_compute_instance" "grafana" {
   metadata = {
     user-data = "${file("./meta-monitoring.yaml")}"
   }
+
+  scheduling_policy {
+    preemptible = true
+  }
 }
-
-
-
 
 # Creating a VM_Elasticsearch
 
@@ -93,6 +98,10 @@ resource "yandex_compute_instance" "elasticsearch" {
   metadata = {
     user-data = "${file("./meta-monitoring.yaml")}"
   }
+
+  scheduling_policy {
+    preemptible = true
+  }
 }
 
 # Creating a VM_Kibana
@@ -123,6 +132,10 @@ resource "yandex_compute_instance" "kibana" {
 
   metadata = {
     user-data = "${file("./meta-monitoring.yaml")}"
+  }
+
+  scheduling_policy {
+    preemptible = true
   }
 }
 
