@@ -35,7 +35,7 @@ resource "yandex_alb_load_balancer" "web-balancer" {
   
   log_options {
     discard_rule {
-      http_code_intervals = ["HTTP_2XX"]
+      http_code_intervals = ["HTTP_4XX"]
       discard_percent = 75
     }
   }
@@ -60,7 +60,7 @@ resource "yandex_alb_virtual_host" "web-virtual-host" {
     name = "web-route"
     http_route {
       http_route_action {
-        backend_group_id = yandex_alb_backend_group.web-backend-group.id
+        backend_group_id = "${yandex_alb_backend_group.web-backend-group.id}"
       }
     }
   }

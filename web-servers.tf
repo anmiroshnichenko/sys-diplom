@@ -1,13 +1,19 @@
 # Adding a ready-made VM image
 
-resource "yandex_compute_image" "lemp-vm-image" {
-  source_family = var.vm_image_family
-}
+#resource "yandex_compute_image" "lemp-vm-image" {
+#  source_family = var.vm_image_family
+#}
+
+#data "yandex_compute_image" "base_image" {
+#  family = var.yc_image_family
+#}
+
 
 # Creating a VM_1
 resource "yandex_compute_instance" "vm-1" {
 
   name        = "linux-vm1"
+  allow_stopping_for_update = true
   platform_id = "standard-v2"
   zone        = var.zone
 
@@ -19,7 +25,8 @@ resource "yandex_compute_instance" "vm-1" {
 
   boot_disk {
     initialize_params {
-      image_id = "${yandex_compute_image.lemp-vm-image.id}"
+      #image_id = "${yandex_compute_image.lemp-vm-image.id}"
+      image_id = var.image_id
       size = "5"	
     }
   }
@@ -39,6 +46,7 @@ resource "yandex_compute_instance" "vm-1" {
 resource "yandex_compute_instance" "vm-2" {
 
   name        = "linux-vm2"
+  allow_stopping_for_update = true
   platform_id = "standard-v2"
   zone        = var.zone1
 
@@ -50,8 +58,9 @@ resource "yandex_compute_instance" "vm-2" {
 
   boot_disk {
     initialize_params {
-      image_id = "${yandex_compute_image.lemp-vm-image.id}"
-      #size = "5"
+      #image_id = "${yandex_compute_image.lemp-vm-image.id}"
+      image_id = var.image_id
+      size = "5"
     }
   }
 
@@ -65,11 +74,13 @@ resource "yandex_compute_instance" "vm-2" {
   }
 }
 # Creating a cloud network
+
 resource "yandex_vpc_network" "network-1" {
   name = "network1"
 }
 
 # Creating a subnet
+
 resource "yandex_vpc_subnet" "subnet-1" {
   name           = "subnet1"
   zone           = var.zone
