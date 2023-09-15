@@ -87,7 +87,6 @@ resource "yandex_vpc_network" "network-1" {
 }
 
 # Creating a subnet
-
 resource "yandex_vpc_subnet" "subnet-1" {
   name           = "subnet1"
   zone           = var.zone
@@ -99,4 +98,14 @@ resource "yandex_vpc_subnet" "subnet-2" {
    zone           = var.zone1
    v4_cidr_blocks = ["192.168.20.0/24"]
    network_id     = "${yandex_vpc_network.network-1.id}"
+}
+
+# Creating a snapshot
+resource "yandex_compute_snapshot" "snapshot-1" {
+  name           = "disk-snapshot"
+  source_disk_id = "yandex_compute_instance.vm-1.boot_disk.disk_id"
+}
+resource "yandex_compute_snapshot" "snapshot-2" {
+  name           = "disk-snapshot"
+  source_disk_id = "yandex_compute_instance.vm-2.boot_disk.disk_id"
 }
