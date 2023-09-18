@@ -15,9 +15,11 @@ default = "lemp"
 
 variable "yc_image_family" {
   description = "family"
-  default     = "ubuntu-2004-lts"
+  #default     = "ubuntu-2004-lts"
+  default     = "debian-11"
 }
 
 variable "image_id" {
-  default = "fd8d8etig5vu92nh75bm" # it's ubuntu-2004-lts
+  #default = "fd8d8etig5vu92nh75bm" # it's ubuntu-2004-lts
+  default = "fd8vtq76jue50g6b6tm7" # it's debian-11
 }
