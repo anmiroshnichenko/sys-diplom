@@ -15,10 +15,10 @@ apt:
   preserve_sources_list: true
 
 packages:
-  - nginx
+  - net-tools
 
-runcmd:
-  - [ systemctl, nginx-reload ]
-  - [ systemctl, enable, nginx.service ]
-  - [ systemctl, start, --no-block, nginx.service ]
-  - [ sh, -c, "echo $(hostname | cut -d '.' -f 1 ) > /var/www/html/index.html" ]
+#runcmd:
+#  - [ systemctl, nginx-reload ]
+#  - [ systemctl, enable, nginx.service ]
+#  - [ systemctl, start, --no-block, nginx.service ]
+#  - [ sh, -c, "echo $(hostname | cut -d '.' -f 1 ) > /var/www/html/index.html" ]
