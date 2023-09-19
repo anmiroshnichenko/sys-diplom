@@ -13,6 +13,7 @@ resource "yandex_alb_load_balancer" "web-balancer" {
     location {
       zone_id   = var.zone1
       subnet_id = yandex_vpc_subnet.subnet-2.id
+      
     }
   }
 
@@ -105,7 +106,7 @@ resource "yandex_alb_target_group" "web-servers" {
   }
   
   target {
-    subnet_id = "${yandex_vpc_subnet.subnet-2.id}"
+    subnet_id = "${yandex_vpc_subnet.subnet-2.id}"    
     ip_address   = "${yandex_compute_instance.vm-2.network_interface[0].ip_address}"
   }
 }

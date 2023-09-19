@@ -1,32 +1,32 @@
 #Creating a securite groups
-# resource "yandex_vpc_security_group" "sg-bastion" {
-#   name        = "sg-bastion"
-#   description = "allows connecting to bastion only from whitelisted address"
-#   network_id  = "${yandex_vpc_network.network-1.id}"
+resource "yandex_vpc_security_group" "sg-bastion" {
+  name        = "sg-bastion"
+  description = "allows connecting to bastion only from whitelisted address"
+  network_id  = "${yandex_vpc_network.network-1.id}"
   
-#   labels = {
-#      type = "sg-bastion"
-#    }
+  labels = {
+     type = "sg-bastion"
+   }
 
-#   ingress {
-#     protocol       = "TCP"
-#     description    = "allow-ssh-from-trusted-ip"
-#     v4_cidr_blocks = var.bastion_whitelist_ip
-#     port           = 22
-#   }
+  ingress {
+    protocol       = "TCP"
+    description    = "allow-ssh-from-trusted-ip"
+    v4_cidr_blocks = var.bastion_whitelist_ip
+    port           = 22
+  }
 
-#   ingress {
-#     protocol       = "ICMP"
-#     description    = "allow-icmp-from-trusted-ip"
-#     v4_cidr_blocks = var.bastion_whitelist_ip
-#   }
+  ingress {
+    protocol       = "ICMP"
+    description    = "allow-icmp-from-trusted-ip"
+    v4_cidr_blocks = var.bastion_whitelist_ip
+  }
 
 #   egress {
 #     protocol       = "ANY"
 #     #description    = "we allow any egress, since we block on ingress"
 #     v4_cidr_blocks = ["0.0.0.0/0"]
 #   }
-# }
+ }
 
 # resource "yandex_vpc_security_group" "sg-web" {
 #   name        = "sg-web"
