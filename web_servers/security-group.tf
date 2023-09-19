@@ -21,24 +21,24 @@ resource "yandex_vpc_security_group" "sg-bastion" {
     v4_cidr_blocks = var.bastion_whitelist_ip
   }
 
-#   egress {
-#     protocol       = "ANY"
-#     #description    = "we allow any egress, since we block on ingress"
-#     v4_cidr_blocks = ["0.0.0.0/0"]
-#   }
- }
+  egress {
+    protocol       = "ANY"
+    #description    = "we allow any egress, since we block on ingress"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 
-# resource "yandex_vpc_security_group" "sg-web" {
-#   name        = "sg-web"
-#   #description = "description for my security group"
-#   network_id  = "${yandex_vpc_network.network-1.id}"
-  
-#   # ingress {
-#   #   protocol       = "TCP"
-#   #   description    = "allows remote access only through Bastion"
-#   #   security_group_id  = yandex_vpc_security_group.sg-bastion.id
-#   #   port           = 22
-#   # }
+resource "yandex_vpc_security_group" "sg-web" {
+  name        = "sg-web"
+  #description = "description for my security group"
+  network_id  = "${yandex_vpc_network.network-1.id}"
+
+  ingress {
+    protocol       = "TCP"
+    description    = "allows remote access only through Bastion"
+    security_group_id  = yandex_vpc_security_group.sg-bastion.id
+    port           = 22
+  }
 
 #   # ingress {
 #   #   protocol       = "ICMP"
@@ -46,13 +46,19 @@ resource "yandex_vpc_security_group" "sg-bastion" {
 #   #   security_group_id  = yandex_vpc_security_group.sg-bastion.id
 #   # }
 
-#   ingress {
-#     protocol       = "TCP"
-#     description    = "allows remote access alb"
-#     v4_cidr_blocks = ["0.0.0.0/0"]
-#     #security_group_id  = yandex_vpc_security_group.sg-ci-cd.id
-#     port      = 80
-#   } 
+  ingress {
+    protocol       = "TCP"
+    description    = "allows remote access alb"
+    v4_cidr_blocks = ["192.168.10.0/24", "192.168.20.0/24"]
+    #security_group_id  = yandex_vpc_security_group.sg-ci-cd.id
+    port      = 80
+  } 
+
+  # ingress {
+  #   description = "Health checks from ALB"
+  #   protocol = "TCP"
+  #   predefined_target = "loadbalancer_healthchecks"  #[198.18.235.0/24, 198.18.248.0/24]
+  # }
 
 #   egress {
 #     protocol       = "ANY"
@@ -69,6 +75,6 @@ resource "yandex_vpc_security_group" "sg-bastion" {
   #  from_port      = 8090
   #  to_port        = 8099
   #}
-# }
+}
 
 
