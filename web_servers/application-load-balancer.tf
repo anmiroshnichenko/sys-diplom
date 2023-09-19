@@ -2,8 +2,8 @@
 
 resource "yandex_alb_load_balancer" "web-balancer" {
   name        = "web-load-balancer"
-
   network_id  = yandex_vpc_network.network-1.id
+  #security_group_ids = ["<идентификатор_группы_безопасности>"]
   
   allocation_policy {
     location {
@@ -109,4 +109,5 @@ resource "yandex_alb_target_group" "web-servers" {
     ip_address   = "${yandex_compute_instance.vm-2.network_interface[0].ip_address}"
   }
 }
+
 

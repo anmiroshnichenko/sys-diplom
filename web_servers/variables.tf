@@ -23,3 +23,8 @@ variable "image_id" {
   #default = "fd8d8etig5vu92nh75bm" # it's ubuntu-2004-lts
   default = "fd8vtq76jue50g6b6tm7" # it's debian-11
 }
+
+variable "bastion_whitelist_ip" {
+  type    = list(string)
+  default = ["0.0.0.0/0"]
+}

@@ -1,5 +1,4 @@
 # Adding a ready-made VM image
-
 #resource "yandex_compute_image" "lemp-vm-image" {
 #  source_family = var.vm_image_family
 #}
@@ -33,7 +32,8 @@ resource "yandex_compute_instance" "vm-1" {
 
   network_interface {
     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
-    nat       = false
+    #nat       = true
+    #security_group_ids = [yandex_vpc_security_group.sg-web.id]
   }
 
   metadata = {
@@ -69,7 +69,8 @@ resource "yandex_compute_instance" "vm-2" {
 
   network_interface {
     subnet_id = "${yandex_vpc_subnet.subnet-2.id}"
-    nat       = false
+    #nat       = true
+    #security_group_ids = [yandex_vpc_security_group.sg-web.id]
   }
 
   metadata = {
@@ -82,110 +83,115 @@ resource "yandex_compute_instance" "vm-2" {
 }
 
 # Creating a VM_Prometheus
-resource "yandex_compute_instance" "prometheus" {
 
-  name        = "prometheus"
-  allow_stopping_for_update = true
-  platform_id = "standard-v2"
-  zone        = var.zone
+# resource "yandex_compute_instance" "prometheus" {
 
-  resources {
-    core_fraction = 20
-    cores  = 2
-    memory = 2
-  }
+#   name        = "prometheus"
+#   allow_stopping_for_update = true
+#   platform_id = "standard-v2"
+#   zone        = var.zone
 
-  boot_disk {
-    initialize_params {
-      image_id = var.image_id
-      size = "5"	
-    }
-  }
+#   resources {
+#     core_fraction = 20
+#     cores  = 2
+#     memory = 2
+#   }
 
-  network_interface {
-    subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
-    nat       = false
-  }
+#   boot_disk {
+#     initialize_params {
+#       image_id = var.image_id
+#       size = "5"	
+#     }
+#   }
 
-  metadata = {
-    user-data = "${file("./meta-monitoring.yaml")}"
-  }
+#   network_interface {
+#     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
+#     nat       = false
+#     #security_group_ids = [yandex_vpc_security_group.sg-inet-acc.id]
+#   }
 
-  scheduling_policy {
-    preemptible = true
-  }
-}
+#   metadata = {
+#     user-data = "${file("./meta-monitoring.yaml")}"
+#   }
+
+#   scheduling_policy {
+#     preemptible = true
+#   }
+# }
 
 # Creating a VM_Grafana
-resource "yandex_compute_instance" "grafana" {
 
-  name        = "grafana"
-  allow_stopping_for_update = true
-  platform_id = "standard-v2"
-  zone        = var.zone
+# resource "yandex_compute_instance" "grafana" {
 
-  resources {
-    core_fraction = 20
-    cores  = 2
-    memory = 2
-  }
+#   name        = "grafana"
+#   allow_stopping_for_update = true
+#   platform_id = "standard-v2"
+#   zone        = var.zone
 
-  boot_disk {
-    initialize_params {
-      image_id = var.image_id
-      size = "5"
-    }
-  }
+#   resources {
+#     core_fraction = 20
+#     cores  = 2
+#     memory = 2
+#   }
 
-  network_interface {
-    subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
-    nat       = true
-  }
+#   boot_disk {
+#     initialize_params {
+#       image_id = var.image_id
+#       size = "5"
+#     }
+#   }
 
-  metadata = {
-    user-data = "${file("./meta-monitoring.yaml")}"
-  }
+#   network_interface {
+#     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
+#     nat       = true
+#     #security_group_ids = [yandex_vpc_security_group.sg-inet-acc.id]
+#   }
 
-  scheduling_policy {
-    preemptible = true
-  }
-}
+#   metadata = {
+#     user-data = "${file("./meta-monitoring.yaml")}"
+#   }
 
-# Creating a VM_Elasticsearch
+#   scheduling_policy {
+#     preemptible = true
+#   }
+# }
 
-resource "yandex_compute_instance" "elasticsearch" {
+# # Creating a VM_Elasticsearch
 
-  name        = "elasticsearch"
-  allow_stopping_for_update = true
-  platform_id = "standard-v2"
-  zone        = var.zone
+# resource "yandex_compute_instance" "elasticsearch" {
 
-  resources {
-    core_fraction = 20
-    cores  = 2
-    memory = 2
-  }
+#   name        = "elasticsearch"
+#   allow_stopping_for_update = true
+#   platform_id = "standard-v2"
+#   zone        = var.zone
 
-  boot_disk {
-    initialize_params {
-      image_id = var.image_id
-      size = "5"
-    }
-  }
+#   resources {
+#     core_fraction = 20
+#     cores  = 2
+#     memory = 2
+#   }
 
-  network_interface {
-    subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
-    nat       = false
-  }
+#   boot_disk {
+#     initialize_params {
+#       image_id = var.image_id
+#       size = "5"
+#     }
+#   }
 
-  metadata = {
-    user-data = "${file("./meta-monitoring.yaml")}"
-  }
+#   network_interface {
+#     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
+#     nat       = false
+#     #security_group_ids = [yandex_vpc_security_group.sg-inet-acc.id]
+#   }
 
-  scheduling_policy {
-    preemptible = true
-  }
-}
+#   metadata = {
+#     user-data = "${file("./meta-monitoring.yaml")}"
+#   }
+
+#   scheduling_policy {
+#     preemptible = true
+#   }
+# }
 
 # Creating a VM_Kibana
 resource "yandex_compute_instance" "kibana" {
@@ -211,6 +217,7 @@ resource "yandex_compute_instance" "kibana" {
   network_interface {
     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
     nat       = true
+    #security_group_ids = [yandex_vpc_security_group.sg-bastion.id]
   }
 
   metadata = {
@@ -244,48 +251,49 @@ resource "yandex_vpc_subnet" "subnet-2" {
 }
 
  # Creating a snapshots
-resource "yandex_compute_snapshot" "snapshot-vm1" {
-  name           = "snapshot-vm1"
-  source_disk_id = "yandex_compute_instance.vm-1.boot_disk.disk_id"
-}
-resource "yandex_compute_snapshot" "snapshot-vm2" {
-  name           = "snapshot-vm2"
-  source_disk_id = "yandex_compute_instance.vm-2.boot_disk.disk_id"
-}
-resource "yandex_compute_snapshot" "snapshot-prometheus" {
-  name           = "snapshot-prometheus"
-  source_disk_id = "yandex_compute_instance.prometheus.boot_disk.disk_id"
-}
-resource "yandex_compute_snapshot" "snapshot-grafana" {
-  name           = "snapshot-grafana"
-  source_disk_id = "yandex_compute_instance.grafana.boot_disk.disk_id"
-}
-resource "yandex_compute_snapshot" "snapshot-elasticsearch" {
-  name           = "snapshot-elasticsearch"
-  source_disk_id = "yandex_compute_instance.elasticsearch.boot_disk.disk_id"
-}
-resource "yandex_compute_snapshot" "snapshot-kibana" {
-  name           = "snapshot-kibana"
-  source_disk_id = "yandex_compute_instance.kibana.boot_disk.disk_id"
-}
+# resource "yandex_compute_snapshot" "snapshot-vm1" {
+#   name           = "snapshot-vm1"
+#   source_disk_id = "${yandex_compute_instance.vm-1.boot_disk[0].disk_id}"
+# }
+# resource "yandex_compute_snapshot" "snapshot-vm2" {
+#   name           = "snapshot-vm2"
+#   source_disk_id = "${yandex_compute_instance.vm-2.boot_disk[0].disk_id}"
+# }
+# resource "yandex_compute_snapshot" "snapshot-prometheus" {
+#   name           = "snapshot-prometheus"
+#   source_disk_id = "yandex_compute_instance.prometheus.boot_disk.disk_id"
+# }
+# resource "yandex_compute_snapshot" "snapshot-grafana" {
+#   name           = "snapshot-grafana"
+#   source_disk_id = "yandex_compute_instance.grafana.boot_disk.disk_id"
+# }
+# resource "yandex_compute_snapshot" "snapshot-elasticsearch" {
+#   name           = "snapshot-elasticsearch"
+#   source_disk_id = "yandex_compute_instance.elasticsearch.boot_disk.disk_id"
+# }
+# resource "yandex_compute_snapshot" "snapshot-kibana" {
+#   name           = "snapshot-kibana"
+#   source_disk_id = "yandex_compute_instance.kibana.boot_disk.disk_id"
+# }
 
-resource "yandex_compute_snapshot_schedule" "default" {
-  name = "snapshot_schedule"
+# resource "yandex_compute_snapshot_schedule" "snapshot-vm" {
+#   name = "snapshot-vm"
 
-  schedule_policy {
-    expression = "0 2 ? * *"
-  }
+#   schedule_policy {
+#     expression = "11 14 * * *"
+#   }
 
-  retention_period = "168h"
+#   retention_period = "168h"
   
-  snapshot_count = 1
+#   snapshot_count = 1
 
-  snapshot_spec {
-	  description = "daily"
-  }
+#   snapshot_spec {
+# 	  description = "daily"
+#   }
 
-  disk_ids = ["yandex_compute_instance.vm-1.boot_disk.disk_id", "yandex_compute_instance.vm-2.boot_disk.disk_id", 
-    "yandex_compute_instance.prometheus.boot_disk.disk_id", "yandex_compute_instance.grafana.boot_disk.disk_id", 
-    "yandex_compute_instance.elasticsearch.boot_disk.disk_id", "yandex_compute_instance.kibana.boot_disk.disk_id" ]
-}
+  # disk_ids = ["yandex_compute_instance.vm-1.boot_disk.disk_id", "yandex_compute_instance.vm-2.boot_disk.disk_id", 
+  #   "yandex_compute_instance.prometheus.boot_disk.disk_id", "yandex_compute_instance.grafana.boot_disk.disk_id", 
+  #   "yandex_compute_instance.elasticsearch.boot_disk.disk_id", "yandex_compute_instance.kibana.boot_disk.disk_id"]
+#   disk_ids = ["${yandex_compute_instance.vm-1.boot_disk[0].disk_id}", "${yandex_compute_instance.vm-2.boot_disk[0].disk_id}"]
+# }
 
