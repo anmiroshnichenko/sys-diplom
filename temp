@@ -1,0 +1,16 @@
+# apt update && apt install gnupg apt-transport-https <--зависимости
+# wget -qO  - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -     <--добавляем gpg-ключ
+# wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg/elasticsearch-keyring.gpg
+# wget --no-check-certificate -qO  - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -     <--добавляем gpg-ключ
+# echo "deb [trusted=yes] https://mirror.yandex.ru/mirrors/elastic/7/ stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list <--добавляем
+репозиторий в apt
+# apt update && apt-get install elasticsearch <--устанавливаем elastic
+# systemctl daemon-reload <--обновляем конфиги systemd
+# systemctl enable elasticsearch.service <--включаем юнит
+# systemctl start elasticsearch.service <--запускаем сервис
+
+deb [trusted=yes] https://mirror.yandex.ru/mirrors/elastic/7/ stable main
+curl -s https://artifacts.elastic.co/GPG-KEY-elasticsearch | 
+sudo gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/elasticsearch7.gpg --import
+ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
+   "<h2>WebServer </h2><br><font color="red">Build by Terraform" 
