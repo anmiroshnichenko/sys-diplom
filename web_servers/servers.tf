@@ -33,7 +33,7 @@ resource "yandex_compute_instance" "vm-1" {
   network_interface {
     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
     nat       = true
-    security_group_ids = [yandex_vpc_security_group.sg-web.id]
+    #security_group_ids = [yandex_vpc_security_group.sg-web.id]
   }
 
   metadata = {
@@ -45,13 +45,14 @@ resource "yandex_compute_instance" "vm-1" {
   }
 }
 
-# Creating a VM_2
+# # Creating a VM_2
 resource "yandex_compute_instance" "vm-2" {
 
   name        = "linux-vm2"
   allow_stopping_for_update = true
   platform_id = "standard-v2"
   zone        = var.zone1
+  # zone        = var.zone
 
   resources {
     core_fraction = 20
@@ -68,7 +69,8 @@ resource "yandex_compute_instance" "vm-2" {
   }
 
   network_interface {
-    subnet_id = "${yandex_vpc_subnet.subnet-2.id}"    
+    subnet_id = "${yandex_vpc_subnet.subnet-2.id}" 
+    # subnet_id = "${yandex_vpc_subnet.subnet-1.id}"   
     nat       = true
     #security_group_ids = [yandex_vpc_security_group.sg-web.id]
   }
@@ -107,7 +109,7 @@ resource "yandex_compute_instance" "vm-2" {
 #   network_interface {
 #     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
 #     nat       = false
-#     #security_group_ids = [yandex_vpc_security_group.sg-inet-acc.id]
+#     security_group_ids = [yandex_vpc_security_group.sg-monitoring.id]
 #   }
 
 #   metadata = {
@@ -144,7 +146,7 @@ resource "yandex_compute_instance" "vm-2" {
 #   network_interface {
 #     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
 #     nat       = true
-#     #security_group_ids = [yandex_vpc_security_group.sg-inet-acc.id]
+#     security_group_ids = [yandex_vpc_security_group.sg-analytics.id]
 #   }
 
 #   metadata = {
@@ -158,40 +160,40 @@ resource "yandex_compute_instance" "vm-2" {
 
 # # Creating a VM_Elasticsearch
 
-# resource "yandex_compute_instance" "elasticsearch" {
+resource "yandex_compute_instance" "elasticsearch" {
 
-#   name        = "elasticsearch"
-#   allow_stopping_for_update = true
-#   platform_id = "standard-v2"
-#   zone        = var.zone
+  name        = "elasticsearch"
+  allow_stopping_for_update = true
+  platform_id = "standard-v2"
+  zone        = var.zone
 
-#   resources {
-#     core_fraction = 20
-#     cores  = 2
-#     memory = 2
-#   }
+  resources {
+    core_fraction = 20
+    cores  = 2
+    memory = 3
+  }
 
-#   boot_disk {
-#     initialize_params {
-#       image_id = var.image_id
-#       size = "5"
-#     }
-#   }
+  boot_disk {
+    initialize_params {
+      image_id = var.image_id
+      size = "5"
+    }
+  }
 
-#   network_interface {
-#     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
-#     nat       = false
-#     #security_group_ids = [yandex_vpc_security_group.sg-inet-acc.id]
-#   }
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
+    nat       = true
+    #security_group_ids = [yandex_vpc_security_group.sg-analytics.id]
+  }
 
-#   metadata = {
-#     user-data = "${file("./meta-monitoring.yaml")}"
-#   }
+  metadata = {
+    user-data = "${file("./meta-monitoring.yaml")}"
+  }
 
-#   scheduling_policy {
-#     preemptible = true
-#   }
-# }
+  scheduling_policy {
+    preemptible = true
+  }
+}
 
 # Creating a VM_Kibana
 resource "yandex_compute_instance" "kibana" {
@@ -217,7 +219,7 @@ resource "yandex_compute_instance" "kibana" {
   network_interface {
     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
     nat       = true
-    security_group_ids = [yandex_vpc_security_group.sg-bastion.id]
+    #security_group_ids = ["yandex_vpc_security_group.sg-bastion.id", "yandex_vpc_security_group.sg-analytics.id"]
   }
 
   metadata = {

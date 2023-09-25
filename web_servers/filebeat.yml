@@ -1,0 +1,28 @@
+# ============================== Filebeat inputs ===============================
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/*.log
+  fields:
+    type: nginx_logs
+  fields_unde_root: true
+  scan_frequency: 5s
+
+# ------------------------------ Logstash Output -------------------------------
+output.logstash:
+  # The Logstash hosts
+  hosts: ["192.168.10.29:5044"]
+
+# ================================= Processors =================================
+processors:
+  - drop_fields:
+      fields: ["beat", "input_type", "prospector", "input", "host", "agent", "ecs"]  
+
+
+  
+
+
+
+
+  
