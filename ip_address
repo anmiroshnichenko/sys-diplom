@@ -1,0 +1,8 @@
+external_elasticsearch = "158.160.113.218"
+external_kibana = "158.160.101.249"
+external_vm1 = "158.160.54.147"
+external_vm2 = "158.160.9.229"
+internal_elasticsearch = "192.168.10.29"
+internal_kibana = "192.168.10.23"
+internal_vm1 = "192.168.10.22"
+internal_vm2 = "192.168.20.6"
