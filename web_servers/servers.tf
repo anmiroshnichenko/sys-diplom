@@ -33,7 +33,7 @@ resource "yandex_compute_instance" "vm-1" {
   network_interface {
     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
     nat       = true
-    #security_group_ids = [yandex_vpc_security_group.sg-web.id]
+    security_group_ids = [yandex_vpc_security_group.sg-web.id]
   }
 
   metadata = {
@@ -70,9 +70,8 @@ resource "yandex_compute_instance" "vm-2" {
 
   network_interface {
     subnet_id = "${yandex_vpc_subnet.subnet-2.id}" 
-    # subnet_id = "${yandex_vpc_subnet.subnet-1.id}"   
     nat       = true
-    #security_group_ids = [yandex_vpc_security_group.sg-web.id]
+    security_group_ids = [yandex_vpc_security_group.sg-web.id]
   }
 
   metadata = {
@@ -86,77 +85,77 @@ resource "yandex_compute_instance" "vm-2" {
 
 # Creating a VM_Prometheus
 
-# resource "yandex_compute_instance" "prometheus" {
+resource "yandex_compute_instance" "prometheus" {
 
-#   name        = "prometheus"
-#   allow_stopping_for_update = true
-#   platform_id = "standard-v2"
-#   zone        = var.zone
+  name        = "prometheus"
+  allow_stopping_for_update = true
+  platform_id = "standard-v2"
+  zone        = var.zone
 
-#   resources {
-#     core_fraction = 20
-#     cores  = 2
-#     memory = 2
-#   }
+  resources {
+    core_fraction = 20
+    cores  = 2
+    memory = 2
+  }
 
-#   boot_disk {
-#     initialize_params {
-#       image_id = var.image_id
-#       size = "5"	
-#     }
-#   }
+  boot_disk {
+    initialize_params {
+      image_id = var.image_id
+      size = "5"	
+    }
+  }
 
-#   network_interface {
-#     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
-#     nat       = false
-#     security_group_ids = [yandex_vpc_security_group.sg-monitoring.id]
-#   }
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
+    nat       = true
+    security_group_ids = [yandex_vpc_security_group.sg-monitoring.id]
+  }
 
-#   metadata = {
-#     user-data = "${file("./meta-monitoring.yaml")}"
-#   }
+  metadata = {
+    user-data = "${file("./meta-monitoring.yaml")}"
+  }
 
-#   scheduling_policy {
-#     preemptible = true
-#   }
-# }
+  scheduling_policy {
+    preemptible = true
+  }
+}
 
 # Creating a VM_Grafana
 
-# resource "yandex_compute_instance" "grafana" {
+resource "yandex_compute_instance" "grafana" {
 
-#   name        = "grafana"
-#   allow_stopping_for_update = true
-#   platform_id = "standard-v2"
-#   zone        = var.zone
+  name        = "grafana"
+  allow_stopping_for_update = true
+  platform_id = "standard-v2"
+  zone        = var.zone
 
-#   resources {
-#     core_fraction = 20
-#     cores  = 2
-#     memory = 2
-#   }
+  resources {
+    core_fraction = 20
+    cores  = 2
+    memory = 2
+  }
 
-#   boot_disk {
-#     initialize_params {
-#       image_id = var.image_id
-#       size = "5"
-#     }
-#   }
+  boot_disk {
+    initialize_params {
+      image_id = var.image_id
+      size = "5"
+    }
+  }
 
-#   network_interface {
-#     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
-#     nat       = true
-#     security_group_ids = [yandex_vpc_security_group.sg-analytics.id]
-#   }
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
+    nat       = true
+    security_group_ids = [yandex_vpc_security_group.sg-dashboard.id]
+  }
 
-#   metadata = {
-#     user-data = "${file("./meta-monitoring.yaml")}"
-#   }
+  metadata = {
+    user-data = "${file("./meta-monitoring.yaml")}"
+  }
 
-#   scheduling_policy {
-#     preemptible = true
-#   }
-# }
+  scheduling_policy {
+    preemptible = true
+  }
+}
 
 # # Creating a VM_Elasticsearch
 
@@ -170,7 +169,7 @@ resource "yandex_compute_instance" "elasticsearch" {
   resources {
     core_fraction = 20
     cores  = 2
-    memory = 3
+    memory = 4
   }
 
   boot_disk {
@@ -183,7 +182,7 @@ resource "yandex_compute_instance" "elasticsearch" {
   network_interface {
     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
     nat       = true
-    #security_group_ids = [yandex_vpc_security_group.sg-analytics.id]
+    security_group_ids = [yandex_vpc_security_group.sg-elk.id]
   }
 
   metadata = {
@@ -219,7 +218,7 @@ resource "yandex_compute_instance" "kibana" {
   network_interface {
     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
     nat       = true
-    #security_group_ids = ["yandex_vpc_security_group.sg-bastion.id", "yandex_vpc_security_group.sg-analytics.id"]
+    security_group_ids = [yandex_vpc_security_group.sg-dashboard.id, yandex_vpc_security_group.sg-bastion.id]
   }
 
   metadata = {
