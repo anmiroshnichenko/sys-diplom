@@ -25,25 +25,26 @@
 #   source_disk_id = "${yandex_compute_instance.kibana.boot_disk[0].disk_id}"
 # }
 
-#Creating a snapshot_schedule
+#Creating a snapshots
 
 resource "yandex_compute_snapshot_schedule" "snapshot-vm" {
   name = "snapshot-vm"
+  description = "daily"
 
   schedule_policy {
-    expression = "00 00 * * *"
+    expression = "0 0 */1 * *"
   }
 
   #retention_period = "168h"
-  retention_period = "168h"
+ #retention_period = "168h"
   
   snapshot_count = "7"
 
-  snapshot_spec {
-	  description = "daily"
-  }
+  # snapshot_spec {
+	#   description = "daily"
+  # }
 
-  disk_ids = ["${yandex_compute_instance.vm-1.boot_disk[0].disk_id}", "${yandex_compute_instance.vm-2.boot_disk[0].disk_id}", 
-    "${yandex_compute_instance.prometheus.boot_disk[0].disk_id}", "${yandex_compute_instance.grafana.boot_disk[0].disk_id}", 
-    "${yandex_compute_instance.elasticsearch.boot_disk[0].disk_id}", "${yandex_compute_instance.kibana.boot_disk[0].disk_id}"]
+  disk_ids = ["${yandex_compute_instance.grafana.boot_disk[0].disk_id}", "${yandex_compute_instance.elasticsearch.boot_disk[0].disk_id}", 
+    "${yandex_compute_instance.vm-1.boot_disk[0].disk_id}",    "${yandex_compute_instance.prometheus.boot_disk[0].disk_id}",  
+    "${yandex_compute_instance.kibana.boot_disk[0].disk_id}", "${yandex_compute_instance.vm-2.boot_disk[0].disk_id}"]
 }
