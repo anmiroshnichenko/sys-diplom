@@ -72,6 +72,8 @@ http://158.160.126.33:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause
 
 `bastion host:  158.160.126.33`  
 
+![alt text](https://github.com/anmiroshnichenko/sys-diplom/blob/main/4.JPG)
+
 ### Резервное копирование
 Создайте snapshot дисков всех ВМ. Ограничьте время жизни snaphot в неделю. Сами snaphot настройте на ежедневное копирование.
 
