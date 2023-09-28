@@ -51,8 +51,8 @@
 
 Создайте ВМ, установите туда Grafana. Настройте её на взаимодействие с ранее развернутым Prometheus. Настройте дешборды с отображением метрик, минимальный набор — Utilization, Saturation, Errors для CPU, RAM, диски, сеть, http_response_count_total, http_response_size_bytes. Добавьте необходимые [tresholds](https://grafana.com/docs/grafana/latest/panels/thresholds/) на соответствующие графики.
 
-`http://158.160.112.144:3000/
-user: admin 
+http://158.160.112.144:3000/
+`user: admin 
 password:  Netology23 `
 
 
