@@ -57,6 +57,7 @@ grafana  admin  Netology23
 Cоздайте ВМ, разверните на ней Elasticsearch. Установите filebeat в ВМ к веб-серверам, настройте на отправку access.log, error.log nginx в Elasticsearch.
 
 Создайте ВМ, разверните на ней Kibana, сконфигурируйте соединение с Elasticsearch.
+http://158.160.126.33:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-3d,to:now))&_a=(columns:!(),filters:!(),index:'9ec60d30-5bb2-11ee-a953-0392aa84dedb',interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))
 
 ### Сеть
 Разверните один VPC. Сервера web, Prometheus, Elasticsearch поместите в приватные подсети. Сервера Grafana, Kibana, application load balancer определите в публичную подсеть.
