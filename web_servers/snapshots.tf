@@ -25,7 +25,7 @@
 #   source_disk_id = "${yandex_compute_instance.kibana.boot_disk[0].disk_id}"
 # }
 
-Creating a snapshots
+#Creating a snapshot_schedule
 
 resource "yandex_compute_snapshot_schedule" "snapshot-vm" {
   name = "snapshot-vm"
