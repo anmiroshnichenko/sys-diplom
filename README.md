@@ -75,6 +75,9 @@ http://158.160.126.33:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause
 ### Резервное копирование
 Создайте snapshot дисков всех ВМ. Ограничьте время жизни snaphot в неделю. Сами snaphot настройте на ежедневное копирование.
 
+![alt text](https://github.com/anmiroshnichenko/sys-diplom/blob/main/2.JPG)
+![alt text](https://github.com/anmiroshnichenko/sys-diplom/blob/main/3.JPG)
+
 ### Дополнительно
 Не входит в минимальные требования. 
 
