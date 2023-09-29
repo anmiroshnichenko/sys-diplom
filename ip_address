@@ -1,6 +1,6 @@
 alb_ip_address = "158.160.125.102"
-external_grafana = "158.160.112.144"
-external_kibana = "158.160.126.33"
+external_grafana = "158.160.119.8"
+external_kibana = "158.160.97.129"
 internal_elasticsearch = "192.168.10.29"
 internal_grafana = "192.168.10.13"
 internal_kibana = "192.168.10.23"
