@@ -51,7 +51,7 @@
 
 Создайте ВМ, установите туда Grafana. Настройте её на взаимодействие с ранее развернутым Prometheus. Настройте дешборды с отображением метрик, минимальный набор — Utilization, Saturation, Errors для CPU, RAM, диски, сеть, http_response_count_total, http_response_size_bytes. Добавьте необходимые [tresholds](https://grafana.com/docs/grafana/latest/panels/thresholds/) на соответствующие графики.
 
-http://158.160.112.144:3000/
+http://158.160.119.8:3000/
 `user: admin 
 password:  Netology23 `
 
@@ -61,7 +61,7 @@ password:  Netology23 `
 Cоздайте ВМ, разверните на ней Elasticsearch. Установите filebeat в ВМ к веб-серверам, настройте на отправку access.log, error.log nginx в Elasticsearch.
 
 Создайте ВМ, разверните на ней Kibana, сконфигурируйте соединение с Elasticsearch.
-http://158.160.126.33:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-3d,to:now))&_a=(columns:!(),filters:!(),index:'9ec60d30-5bb2-11ee-a953-0392aa84dedb',interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))
+http://158.160.97.129:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-3d,to:now))&_a=(columns:!(),filters:!(),index:'9ec60d30-5bb2-11ee-a953-0392aa84dedb',interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))
 
 ### Сеть
 Разверните один VPC. Сервера web, Prometheus, Elasticsearch поместите в приватные подсети. Сервера Grafana, Kibana, application load balancer определите в публичную подсеть.
@@ -70,7 +70,7 @@ http://158.160.126.33:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause
 
 Настройте ВМ с публичным адресом, в которой будет открыт только один порт — ssh. Настройте все security groups на разрешение входящего ssh из этой security group. Эта вм будет реализовывать концепцию bastion host. Потом можно будет подключаться по ssh ко всем хостам через этот хост.
 
-`bastion host:  158.160.126.33`  
+`bastion host:  158.160.97.129`  
 
 ![alt text](https://github.com/anmiroshnichenko/sys-diplom/blob/main/4.JPG)
 
